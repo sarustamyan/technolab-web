@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
+using BCrypt.Net;
 
 namespace Technolab.OnlineLibrary.Web.Controllers
 {
@@ -26,20 +27,20 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            using var context = ContextFactory.Create();
-            
-            var user = context.Users
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
-                .SingleOrDefault();
-            if (user == null)
-            {
-                ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
-                ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
-                return View();
-            }
+            string jsonFilePath = "Technolab.OnlineLibrary.Web\Data\users.json"; 
+            string jsonContent = await System.IO.File.ReadAllTextAsync(jsonFilePath);
 
-            await PerformLogin(user);
-            return LocalRedirect(returnUrl ?? "/");
+            List<User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(jsonContent);
+
+            var user = users.FirstOrDefault(x => x.Username == model.Username);
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password)){
+                await PerformLogin(user);
+                return LocalRedirect(returnUrl ?? "/");
+            }else{
+                    ModelState.AddModelError("Invalid username or password");
+                    return View(model);
+            }
         }
 
         [HttpPost]
