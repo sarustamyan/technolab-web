@@ -1,31 +1,32 @@
-using System; 
-using System.Linq; 
-using Microsoft.AspNetCore.Authorization; 
-using Microsoft.AspNetCore.Mvc; 
-using Technolab.OnlineLibrary.Web.Models; 
-using Technolab.OnlineLibrary.Web.ViewModels; 
- 
-namespace Technolab.OnlineLibrary.Web.Controllers 
-{ 
-    [AllowAnonymous] 
-    public class BooksController : Controller 
-    { 
-        private readonly ILibraryDbContextFactory _contextFactory; 
- 
-        public BooksController(ILibraryDbContextFactory contextFactory) 
-        { 
-            _contextFactory = contextFactory; 
-        } 
- 
-        public IActionResult Index(string searchTerm) 
-        { 
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Technolab.OnlineLibrary.Web.Models;
+using Technolab.OnlineLibrary.Web.ViewModels;
+
+namespace Technolab.OnlineLibrary.Web.Controllers
+{
+    [AllowAnonymous]
+    public class BooksController : Controller
+    {
+        private readonly ILibraryDbContextFactory _contextFactory;
+
+        public BooksController(ILibraryDbContextFactory contextFactory)
+        {
+            _contextFactory = contextFactory;
+        }
+
+        public IActionResult Index(string searchTerm)
+        {
             using var context = _contextFactory.Create();
 
-            List<Book> books = context.Books;
+            List<Book> books = context.Books.ToList();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                books = books.Where(x => x.Title.Contains(searchTerm) || x.Author.Contains(searchTerm)).ToList();
+                var searchTerms = searchTerm.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                books = books.Where(book => searchTerms.Any(term => book.Title.Contains(term) || book.Author.Contains(term))).ToList();
             }
 
             var model = new BookSearchViewModel
@@ -39,7 +40,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 SearchTerm = searchTerm
             };
 
-            return View(model); 
-        } 
-    } 
+            return View(model);
+        }
+    }
 }
