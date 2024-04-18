@@ -1,0 +1,30 @@
+﻿@model Technolab.OnlineLibrary.Web.ViewModels.BookSearchViewModel
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h1 class="display-4 mb-6">Books</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form asp-controller="Books" asp-action="Index" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="text" name="searchTerm" class="form-control mr-2" placeholder="Search by title or author" value="@Model.SearchTerm" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+
+@foreach (var book in Model.Books)
+{
+    <div class="card mb-6">
+        <div class="card-body">
+            <h4 class="card-title">@book.Title</h4>
+            <h6 class="card-subtitle mb-2 text-body-secondary">By @book.Author</h6>
+            <a class="card-link" asp-area="" asp-controller="Checkouts" asp-action="Index">Get this item</a>
+        </div>
+    </div>
+}
+
