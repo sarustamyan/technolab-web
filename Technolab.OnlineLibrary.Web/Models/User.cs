@@ -9,5 +9,12 @@
         public string Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public void HashPassword()
+        {
+            if (!BCrypt.Net.BCrypt.EnhancedVerify(Password, BCrypt.Net.BCrypt.HashPassword(Password)))
+            {
+                Password = BCrypt.Net.BCrypt.HashPassword(Password);
+            }
+        }
     }
 }
