@@ -27,19 +27,23 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            string jsonFilePath = "Technolab.OnlineLibrary.Web\Data\users.json"; 
-            string jsonContent = await System.IO.File.ReadAllTextAsync(jsonFilePath);
 
-            List<User> users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(jsonContent);
+            using var context = ContextFactory.Create();
 
-            var user = users.FirstOrDefault(x => x.Username == model.Username);
+            var user = context.Users
+                .Where(x => x.Username == model.Username && x.Password == model.Password)
+                .SingleOrDefault();
 
-            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password)){
+            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
                 await PerformLogin(user);
                 return LocalRedirect(returnUrl ?? "/");
-            }else{
-                    ModelState.AddModelError("Invalid username or password");
-                    return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
+                ModelState.AddModelError(nameof(model.Password), "Invalid username or password"); 
+                return View(model);
             }
         }
 
@@ -61,8 +65,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 new Claim(type: Consts.Claim.FirstName, value: user.FirstName),
                 new Claim(type: Consts.Claim.LastName, value: user.LastName),
             };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);            
-            
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity));
