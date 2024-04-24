@@ -14,9 +14,17 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             this.ContextFactory = contextFactory;
         }
 
-        public IActionResult Index(string searchTerm)
+        public IActionResult Index(string searchTerm, int pg = 1)
         {
             var books = Search(searchTerm);
+            const int pageSize = 10;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+            int recsCount = books.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recsSkip = (pg - 1) * pageSize;
 
             var model = new BookSearchViewModel
             {
@@ -25,9 +33,9 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                     Id = x.Id,
                     Title = x.Title,
                     Author = x.Author
-                }).ToList()
+                }).OrderBy(x => x.Id).Skip(recsSkip).Take(pager.PageSize).ToList()
             };
-
+            this.ViewBag.Pager = pager;
             return View(model);
         }
 
