@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -26,20 +26,24 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
+
             using var context = ContextFactory.Create();
-            
+
             var user = context.Users
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
+                .Where(x => x.Username == model.Username)
                 .SingleOrDefault();
-            if (user == null)
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
+                await PerformLogin(user);
+                return LocalRedirect(returnUrl ?? "/");
+            }
+            else
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
-                ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
-                return View();
+                ModelState.AddModelError(nameof(model.Password), "Invalid username or password"); 
+                return View(model);
             }
-
-            await PerformLogin(user);
-            return LocalRedirect(returnUrl ?? "/");
         }
 
         [HttpPost]
@@ -60,8 +64,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 new Claim(type: Consts.Claim.FirstName, value: user.FirstName),
                 new Claim(type: Consts.Claim.LastName, value: user.LastName),
             };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);            
-            
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity));

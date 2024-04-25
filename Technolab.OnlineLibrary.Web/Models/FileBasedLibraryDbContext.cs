@@ -18,8 +18,9 @@ namespace Technolab.OnlineLibrary.Web.Models
 
         public void SaveChanges()
         {
-            File.WriteAllText(UsersFilePath, JsonSerializer.Serialize(Users));
-            File.WriteAllText(BooksFilePath, JsonSerializer.Serialize(Books));
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            File.WriteAllText(UsersFilePath, JsonSerializer.Serialize(Users, options));
+            File.WriteAllText(BooksFilePath, JsonSerializer.Serialize(Books, options));
         }
 
         public void Dispose()

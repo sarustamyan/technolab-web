@@ -1,4 +1,4 @@
-﻿namespace Technolab.OnlineLibrary.Web.Models
+namespace Technolab.OnlineLibrary.Web.Models
 {
     public class User
     {
@@ -9,5 +9,10 @@
         public string Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public void HashPassword()
+        {
+            Password = BCrypt.Net.BCrypt.HashPassword(Password);
+        }
     }
 }
