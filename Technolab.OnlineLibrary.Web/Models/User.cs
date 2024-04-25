@@ -12,6 +12,7 @@ namespace Technolab.OnlineLibrary.Web.Models
 
         public void HashPassword()
         {
-          Password = BCrypt.Net.BCrypt.HashPassword(Password);     
+            Password = BCrypt.Net.BCrypt.HashPassword(Password);
         }
+    }
 }

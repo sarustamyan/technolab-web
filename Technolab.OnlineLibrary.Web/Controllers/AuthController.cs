@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
-using BCrypt.Net;
 
 namespace Technolab.OnlineLibrary.Web.Controllers
 {
@@ -31,7 +30,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             using var context = ContextFactory.Create();
 
             var user = context.Users
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
+                .Where(x => x.Username == model.Username)
                 .SingleOrDefault();
 
             if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
