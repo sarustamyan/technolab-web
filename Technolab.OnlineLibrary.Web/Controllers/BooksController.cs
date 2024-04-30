@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
 using static System.Reflection.Metadata.BlobBuilder;
@@ -14,9 +15,16 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             this.ContextFactory = contextFactory;
         }
 
-        public IActionResult Index(string searchTerm)
+        public IActionResult Index(string searchTerm, int page = 1)
         {
             var books = Search(searchTerm);
+            const int pageSize = 10;
+            if (page < 1)
+            {
+                page = 1;
+            }
+            var pager = new PagerViewModel(totalItems: books.Count(), page: page, pageSize: pageSize);
+            int recordsToSkip = (page - 1) * pageSize;
 
             var model = new BookSearchViewModel
             {
@@ -25,9 +33,9 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                     Id = x.Id,
                     Title = x.Title,
                     Author = x.Author
-                }).ToList()
+                }).OrderBy(x => x.Id).Skip(recordsToSkip).Take(pager.PageSize).ToList(),
+                Pager = pager
             };
-
             return View(model);
         }
 
