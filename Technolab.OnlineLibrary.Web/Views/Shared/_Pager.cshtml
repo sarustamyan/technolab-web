@@ -1,0 +1,46 @@
+﻿@{
+    var controller = ViewData["controller"];
+    var action = ViewData["action"];
+}
+<div class="container">
+   @if (Model.Pager.TotalPages > 0)
+   {
+     <ul class="pagination justify-content-end">
+         @if (Model.Pager.CurrentPage > 1)
+         {
+             <li class="page-item">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="1">
+                     First
+                 </a>
+             </li>
+             <li class="page-item">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.Pager.CurrentPage-1)">
+                     Previous
+                 </a>
+             </li>
+         }
+         @for (var pageIndex = Model.Pager.StartPage; pageIndex <= Model.Pager.EndPage; pageIndex++)
+         {
+             <li class="page-item @(pageIndex == Model.Pager.CurrentPage ? "active" : "")">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@pageIndex">
+                     @pageIndex
+                 </a>
+
+             </li>
+         }
+         @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+         {
+             <li class="page-item">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.Pager.CurrentPage+1)">
+                     Next
+                 </a>
+             </li>
+             <li class="page-item">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@Model.Pager.TotalPages">
+                     Last
+                 </a>
+             </li>
+         }
+     </ul>
+ }
+</div>
