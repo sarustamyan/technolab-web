@@ -9,6 +9,8 @@ namespace Technolab.OnlineLibrary.Web.Models
         public string Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsLocked { get; set; }
+        public int InvalidLoginAttempts { get; set; } 
 
         public void HashPassword()
         {
