@@ -10,9 +10,11 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 {
     public class AuthController : Controller
     {
-        public AuthController(ILibraryDbContextFactory contextFactory)
+        private readonly IConfiguration _configuration;
+        public AuthController(ILibraryDbContextFactory contextFactory, IConfiguration configuration)
         {
             this.ContextFactory = contextFactory;
+            _configuration = configuration;
         }
 
         [AllowAnonymous]
@@ -35,13 +37,25 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 
             if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
+                user.InvalidLoginAttempts = 0;
                 await PerformLogin(user);
                 return LocalRedirect(returnUrl ?? "/");
             }
             else
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
-                ModelState.AddModelError(nameof(model.Password), "Invalid username or password"); 
+                ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
+
+                if (user != null)
+                {
+                    user.InvalidLoginAttempts++;
+
+                    if (user.InvalidLoginAttempts >= _configuration.GetValue<int>("InvalidLoginAttempts"))
+                    {
+                        user.IsLocked = true;
+                        ModelState.AddModelError("", "Your account has been locked");
+                    }
+                }
                 return View(model);
             }
         }
