@@ -10,9 +10,10 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 {
     public class AuthController : Controller
     {
-        public AuthController(ILibraryDbContextFactory contextFactory)
+        public AuthController(ILibraryDbContextFactory contextFactory, IEmailClient emailClient)
         {
             this.ContextFactory = contextFactory;
+            this.EmailClient = emailClient;
         }
 
         [AllowAnonymous]
@@ -26,7 +27,6 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-
             using var context = ContextFactory.Create();
 
             var user = context.Users
@@ -41,7 +41,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             else
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
-                ModelState.AddModelError(nameof(model.Password), "Invalid username or password"); 
+                ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
                 return View(model);
             }
         }
@@ -51,6 +51,44 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return LocalRedirect("/");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            ViewBag.EmailSent = false;
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ForgotPassword(string username)
+        {
+            using var context = ContextFactory.Create();
+
+            var user = context.Users.Where(x => x.Username == username).SingleOrDefault();
+
+            if (user != default)
+            {
+                var message = CreateForgotPasswordEmailMessage(user);
+                EmailClient.SendEmail(message);
+                
+            }
+
+            ViewBag.EmailSent = true;
+            return View();
+        }
+
+        private EmailMessage CreateForgotPasswordEmailMessage(User user)
+        {
+            return new EmailMessage
+            {
+                From = "Technolab",
+                To = user.Email,
+                Subject = "Reset Password",
+                Body = "Test"
+            };
         }
 
         private async Task PerformLogin(User user)
@@ -72,5 +110,6 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         }
 
         private ILibraryDbContextFactory ContextFactory { get; }
+        private IEmailClient EmailClient { get; }
     }
 }

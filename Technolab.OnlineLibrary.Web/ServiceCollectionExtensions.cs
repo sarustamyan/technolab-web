@@ -8,6 +8,8 @@ namespace Technolab.OnlineLibrary.Web
         {
             services.AddSingleton<ILibraryDbContextFactory>(x =>
                 new FileBasedLibraryDbContextFactory(directoryPath: x.GetRequiredService<IConfiguration>()[ConfigurationKeys.FileBasedDbContextDirectory]));
+
+            services.AddSingleton<IEmailClient, MailgunEmailClient>();
         }
     }
 }
