@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using NuGet.Common;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
 
@@ -14,6 +16,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         {
             this.ContextFactory = contextFactory;
             this.EmailClient = emailClient;
+            this.token = null;
+            this.tokenExpiry = null;
         }
 
         [AllowAnonymous]
@@ -71,23 +75,63 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 
             if (user != default)
             {
-                var message = CreateForgotPasswordEmailMessage(user);
+                token = GenerateToken();
+                tokenExpiry = DateTime.UtcNow.AddHours(1);
+                var callbackUrl = Url.Action("ResetPassword", "Auth", new { token }, Request.Scheme);
+                var message = CreateForgotPasswordEmailMessage(user, callbackUrl);
                 EmailClient.SendEmail(message);
-                
+
             }
 
             ViewBag.EmailSent = true;
             return View();
         }
 
-        private EmailMessage CreateForgotPasswordEmailMessage(User user)
+        private string GenerateToken()
+        {
+            byte[] tokenBytes = new byte[32];
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(tokenBytes);
+            }
+            return WebEncoders.Base64UrlEncode(tokenBytes);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ResetPassword(string urlToken)
+        {
+            Console.WriteLine($"URLTOKEN:***{urlToken}***");
+            Console.WriteLine($"TOKEN:***{token}***");
+            if (string.IsNullOrEmpty(urlToken) || urlToken == token)
+            {
+                ViewBag.PasswordChanged = false;
+                //return RedirectToAction("ForgotPassword");
+            }
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ResetPassword(string newPassword, string confirmPassword)
+        {
+            if (newPassword == "hello" && confirmPassword == "world")
+            {
+                ViewBag.PasswordChanged = true;
+            }
+            return View();
+        }
+
+
+
+        private EmailMessage CreateForgotPasswordEmailMessage(User user, string callbackUrl)
         {
             return new EmailMessage
             {
                 From = "Technolab",
                 To = user.Email,
                 Subject = "Reset Password",
-                Body = "Test"
+                Body = $"To reset your password click here: {callbackUrl}"
             };
         }
 
@@ -111,5 +155,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 
         private ILibraryDbContextFactory ContextFactory { get; }
         private IEmailClient EmailClient { get; }
+
+        private string token;
+        private DateTime? tokenExpiry;
     }
 }
