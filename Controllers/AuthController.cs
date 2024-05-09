@@ -38,6 +38,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 user.InvalidLoginAttempts = 0;
+                context.SaveChanges();
                 await PerformLogin(user);
                 return LocalRedirect(returnUrl ?? "/");
             }
@@ -54,6 +55,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                     {
                         user.IsLocked = true;
                         ModelState.AddModelError("", "Your account has been locked");
+                        context.SaveChanges();
                     }
                 }
                 return View(model);
