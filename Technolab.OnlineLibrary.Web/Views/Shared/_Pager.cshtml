@@ -1,12 +1,13 @@
-﻿@{
+﻿@model Technolab.OnlineLibrary.Web.ViewModels.PagerViewModel
+@{
     var controller = ViewData["controller"];
     var action = ViewData["action"];
 }
 <div class="container">
-   @if (Model.Pager.TotalPages > 0)
+   @if (Model.TotalPages > 0)
    {
      <ul class="pagination justify-content-end">
-         @if (Model.Pager.CurrentPage > 1)
+         @if (Model.CurrentPage > 1)
          {
              <li class="page-item">
                  <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="1">
@@ -14,29 +15,29 @@
                  </a>
              </li>
              <li class="page-item">
-                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.Pager.CurrentPage-1)">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.CurrentPage-1)">
                      Previous
                  </a>
              </li>
          }
-         @for (var pageIndex = Model.Pager.StartPage; pageIndex <= Model.Pager.EndPage; pageIndex++)
+         @for (var pageIndex = Model.StartPage; pageIndex <= Model.EndPage; pageIndex++)
          {
-             <li class="page-item @(pageIndex == Model.Pager.CurrentPage ? "active" : "")">
+             <li class="page-item @(pageIndex == Model.CurrentPage ? "active" : "")">
                  <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@pageIndex">
                      @pageIndex
                  </a>
 
              </li>
          }
-         @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+         @if (Model.CurrentPage < Model.TotalPages)
          {
              <li class="page-item">
-                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.Pager.CurrentPage+1)">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@(Model.CurrentPage+1)">
                      Next
                  </a>
              </li>
              <li class="page-item">
-                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@Model.Pager.TotalPages">
+                 <a class="page-link" asp-controller=@controller asp-action=@action asp-route-page="@Model.TotalPages">
                      Last
                  </a>
              </li>
