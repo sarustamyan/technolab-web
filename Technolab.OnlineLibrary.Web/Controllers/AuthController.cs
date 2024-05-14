@@ -1,8 +1,13 @@
+using System.Net.Security;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Data.Sqlite;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
@@ -117,7 +122,14 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 
             if (user != default)
             {
-                var message = CreateForgotPasswordEmailMessage(user);
+                string token = GenerateToken();
+                //DateTime? tokenExpiry = DateTime.UtcNow.AddHours(1);
+                user.ResetPasswordToken = token;
+                //user.ResetPasswordTokenExpiry = tokenExpiry.ToString();
+                //Console.WriteLine($"tokenExpiry:***{user.ResetPasswordTokenExpiry}***");
+                context.SaveChanges();
+                var callbackUrl = Url.Action("ResetPassword", "Auth", new { token }, Request.Scheme);
+                var message = CreateForgotPasswordEmailMessage(user, callbackUrl);
                 EmailClient.SendEmail(message);
             }
 
@@ -125,15 +137,68 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             return View();
         }
 
-        private EmailMessage CreateForgotPasswordEmailMessage(User user)
+        private string GenerateToken()
+        {
+            byte[] tokenBytes = new byte[32];
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(tokenBytes);
+            }
+            return WebEncoders.Base64UrlEncode(tokenBytes);
+        }
+
+        private EmailMessage CreateForgotPasswordEmailMessage(User user, string callbackUrl)
         {
             return new EmailMessage
             {
                 From = "Technolab",
                 To = user.Email,
                 Subject = "Reset Password",
-                Body = "Test"
+                Body = $"To reset your password click here: {callbackUrl}"
             };
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            string parameterValue = HttpContext.Request.Query["token"];
+            if (string.IsNullOrEmpty(parameterValue))
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            using var context = ContextFactory.Create();
+            var user = context.Users.Where(x => x.ResetPasswordToken == parameterValue).SingleOrDefault();
+            //&& DateTime.ParseExact(x.ResetPasswordTokenExpiry, "yyyy-MM-dd HH:mm:ss", null) > DateTime.UtcNow);
+            if (user == default)
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            ViewBag.PasswordChanged = false;
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ResetPassword(string newPassword, string confirmPassword)
+        {
+            string parameterValue = HttpContext.Request.Query["token"];
+            using var context = ContextFactory.Create();
+            var user = context.Users.Where(x => x.ResetPasswordToken == parameterValue).SingleOrDefault();
+            if (user == default)
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            if (string.IsNullOrEmpty(newPassword)
+                || string.IsNullOrEmpty(confirmPassword)
+                || newPassword != confirmPassword)
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            context.SaveChanges();
+            ViewBag.PasswordChanged = true;
+            return View();
         }
 
         private async Task PerformLogin(User user)
