@@ -49,8 +49,9 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             var books = (IEnumerable<Book>)context.Books;
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                var searchTerms = searchTerm.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                books = books.Where(book => searchTerms.Any(term => book.Title.Contains(term) || book.Author.Contains(term)));
+                var searchTerms = searchTerm.ToLower().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                books = books.Where(book => searchTerms.Any(term =>
+                    book.Title.ToLower().Contains(term) || book.Author.ToLower().Contains(term)));
             }
             return books.ToList();
         }

@@ -8,6 +8,17 @@
 
 <h1 class="display-4 mb-6">Books</h1>
 
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form asp-controller="Books" asp-action="Index" method="get" class="form-inline">
+            <div class="form-group">
+                <input type="text" name="searchTerm" class="form-control mr-2" placeholder="Search by title or author" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="position: relative; top: 10px; left: 0px;">Search</button>
+        </form>
+    </div>
+</div>
+
 @foreach (var book in Model.Books)
 {
     <div class="card mb-6">
