@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
 
@@ -46,6 +47,51 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Login2(LoginViewModel model, string? returnUrl = null)
+        {
+            User user;
+            using (var connection = new SqliteConnection(@"Data Source=d:\MyFolder\work\technolab\technolab-web\Technolab.OnlineLibrary.Web\Data\data.db"))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "select * from Users where Username = '" + model.Username + "'";
+                    var reader = command.ExecuteReader();
+                    if (!reader.Read())
+                    {
+                        user = null;
+                    }
+                    else
+                    {
+                        user = new User
+                        {
+                            Id = (int)(long)reader["Id"],
+                            Username = (string)reader["Username"],
+                            Password = (string)reader["Password"],
+                            Email = (string)reader["Email"],
+                            Role = (string)reader["Role"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                        };
+                    }
+                }
+            }
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
+                await PerformLogin(user);
+                return LocalRedirect(returnUrl ?? "/");
+            }
+            else
+            {
+                ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
+                ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
+                return View(model);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -73,7 +119,6 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             {
                 var message = CreateForgotPasswordEmailMessage(user);
                 EmailClient.SendEmail(message);
-                
             }
 
             ViewBag.EmailSent = true;
