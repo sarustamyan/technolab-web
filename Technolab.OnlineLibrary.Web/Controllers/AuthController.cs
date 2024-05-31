@@ -57,7 +57,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "select * from Users where Username = '" + model.Username + "'";
+                    command.CommandText = "select * from Users where Username = '" + model.Username + "' and Password= '" + model.Password + "'";
                     var reader = command.ExecuteReader();
                     if (!reader.Read())
                     {
@@ -79,7 +79,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 }
             }
 
-            if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            if (user != null)
             {
                 await PerformLogin(user);
                 return LocalRedirect(returnUrl ?? "/");
@@ -88,7 +88,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
                 ModelState.AddModelError(nameof(model.Password), "Invalid username or password");
-                return View(model);
+                return View("Login", model);
             }
         }
 

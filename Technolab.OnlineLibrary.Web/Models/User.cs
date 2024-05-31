@@ -10,9 +10,9 @@ namespace Technolab.OnlineLibrary.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public void HashPassword()
+        public static string HashPassword(string password)
         {
-            Password = BCrypt.Net.BCrypt.HashPassword(Password);
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }
