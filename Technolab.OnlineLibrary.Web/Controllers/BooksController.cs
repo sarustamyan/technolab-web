@@ -32,7 +32,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 {
                     Id = x.Id,
                     Title = x.Title,
-                    Author = x.Author
+                    Author = x.Author,
+                    Count = x.Count
                 }).OrderBy(x => x.Id).Skip(recordsToSkip).Take(pager.PageSize).ToList(),
                 Pager = pager
             };

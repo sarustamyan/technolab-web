@@ -25,6 +25,12 @@
         <div class="card-body">
             <h4 class="card-title">@book.Title</h4>
             <h6 class="card-subtitle mb-2 text-body-secondary">By @book.Author</h6>
+            <p>Available Copies: @book.Count</p>
+            @if (book.Count == 0)
+            {
+                <a href="@Url.Action("PlaceHold", "Holds", new { bookId = book.Id })" class="card-link">Place Hold</a>
+            }
+
             <a class="card-link" asp-area="" asp-controller="Checkouts" asp-action="Index">Get this item</a>
         </div>
     </div>
