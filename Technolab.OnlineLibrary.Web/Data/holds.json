@@ -1,0 +1,30 @@
+[
+  {
+    "HoldId": 1,
+    "UserId": 1,
+    "BookId": 1,
+    "CreatedOn": "2024-05-31T19:56:56.801272+04:00",
+    "Status": 1
+  },
+  {
+    "HoldId": 2,
+    "UserId": 1,
+    "BookId": 5,
+    "CreatedOn": "2024-05-31T19:57:09.329361+04:00",
+    "Status": 1
+  },
+  {
+    "HoldId": 3,
+    "UserId": 1,
+    "BookId": 8,
+    "CreatedOn": "2024-06-06T18:32:01.450017+04:00",
+    "Status": 1
+  },
+  {
+    "HoldId": 4,
+    "UserId": 1,
+    "BookId": 8,
+    "CreatedOn": "2024-06-06T18:32:07.336589+04:00",
+    "Status": 1
+  }
+]

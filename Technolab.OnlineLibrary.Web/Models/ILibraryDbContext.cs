@@ -6,6 +6,8 @@
 
         List<Book> Books { get; set; }
 
+        List<Hold> Holds { get; set; }
+
         void SaveChanges();
     }
 }

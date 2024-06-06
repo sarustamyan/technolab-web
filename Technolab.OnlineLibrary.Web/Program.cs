@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Technolab.OnlineLibrary.Web.BackgroundServices;
 using Technolab.OnlineLibrary.Web;
 using Technolab.OnlineLibrary.Web.Models;
 using System;
@@ -38,6 +40,7 @@ builder.Services.AddAntiforgery(options =>
 });
 
 builder.Services.AddDbContextFactory();
+builder.Services.AddHostedService<BookAvailabilityService>(); // Add the background service
 
 var app = builder.Build();
 
