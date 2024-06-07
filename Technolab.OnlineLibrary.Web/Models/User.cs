@@ -9,6 +9,8 @@ namespace Technolab.OnlineLibrary.Web.Models
         public string Role { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string ResetPasswordToken { get; set; }
+        public string ResetPasswordTokenExpiry { get; set; }
 
         public static string HashPassword(string password)
         {
