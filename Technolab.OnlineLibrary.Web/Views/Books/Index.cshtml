@@ -1,0 +1,19 @@
+﻿@model Technolab.OnlineLibrary.Web.ViewModels.BookSearchViewModel
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h1 class="display-4 mb-6">Books</h1>
+
+@foreach (var book in Model.Books)
+{
+    <div class="card mb-6">
+        <div class="card-body">
+            <h4 class="card-title">@book.Title</h4>
+            <h6 class="card-subtitle mb-2 text-body-secondary">By @book.Author</h6>
+            <a class="card-link" asp-area="" asp-controller="Checkouts" asp-action="Index">Get this item</a>
+        </div>
+    </div>
+}
+
