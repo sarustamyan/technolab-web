@@ -1,8 +1,602 @@
 [
   {
     "Id": 1,
-    "Title": "The Programmer's Brain",
-    "Author": "Felienne Hermans",
+    "Title": "Unlocking Android",
+    "Author": "W. Frank Ableson, Charlie Collins, Robi Sen",
+    "Count": 4
+  },
+  {
+    "Id": 2,
+    "Title": "Android in Action, Second Edition",
+    "Author": "W. Frank Ableson, Robi Sen",
     "Count": 1
+  },
+  {
+    "Id": 3,
+    "Title": "Specification by Example",
+    "Author": "Gojko Adzic",
+    "Count": 5
+  },
+  {
+    "Id": 4,
+    "Title": "Flex 3 in Action",
+    "Author": "Tariq Ahmed with Jon Hirschi, Faisal Abid",
+    "Count": 2
+  },
+  {
+    "Id": 5,
+    "Title": "Flex 4 in Action",
+    "Author": "Tariq Ahmed, Dan Orlando, John C. Bland II, Joel Hooks",
+    "Count": 4
+  },
+  {
+    "Id": 6,
+    "Title": "Collective Intelligence in Action",
+    "Author": "Satnam Alag",
+    "Count": 5
+  },
+  {
+    "Id": 7,
+    "Title": "Zend Framework in Action",
+    "Author": "Rob Allen, Nick Lo, Steven Brown",
+    "Count": 3
+  },
+  {
+    "Id": 8,
+    "Title": "Flex on Java",
+    "Author": "Bernerd Allmon, Jeremy Anderson",
+    "Count": 4
+  },
+  {
+    "Id": 9,
+    "Title": "Griffon in Action",
+    "Author": "Andres Almiray, Danno Ferrin, James Shingler",
+    "Count": 3
+  },
+  {
+    "Id": 10,
+    "Title": "OSGi in Depth",
+    "Author": "Alexandre de Castro Alves",
+    "Count": 5
+  },
+  {
+    "Id": 11,
+    "Title": "Flexible Rails",
+    "Author": "Peter Armstrong",
+    "Count": 3
+  },
+  {
+    "Id": 12,
+    "Title": "Hello! Flex 4",
+    "Author": "Peter Armstrong",
+    "Count": 3
+  },
+  {
+    "Id": 13,
+    "Title": "Coffeehouse",
+    "Author": "Levi Asher, Christian Crumlish",
+    "Count": 5
+  },
+  {
+    "Id": 14,
+    "Title": "Team Foundation Server 2008 in Action",
+    "Author": "Jamil Azher",
+    "Count": 5
+  },
+  {
+    "Id": 15,
+    "Title": "Brownfield Application Development in .NET",
+    "Author": "Kyle Baley, Donald Belcham",
+    "Count": 3
+  },
+  {
+    "Id": 16,
+    "Title": "MongoDB in Action",
+    "Author": "Kyle Banker",
+    "Count": 1
+  },
+  {
+    "Id": 17,
+    "Title": "Distributed Application Development with PowerBuilder 6.0",
+    "Author": "Michael J. Barlotta",
+    "Count": 1
+  },
+  {
+    "Id": 18,
+    "Title": "Jaguar Development with PowerBuilder 7",
+    "Author": "Michael Barlotta",
+    "Count": 2
+  },
+  {
+    "Id": 19,
+    "Title": "Taming Jaguar",
+    "Author": "Michael J. Barlotta, Jason R. Weiss",
+    "Count": 3
+  },
+  {
+    "Id": 20,
+    "Title": "3D User Interfaces with Java 3D",
+    "Author": "Jon Barrilleaux",
+    "Count": 1
+  },
+  {
+    "Id": 21,
+    "Title": "Hibernate in Action",
+    "Author": "Christian Bauer, Gavin King",
+    "Count": 2
+  },
+  {
+    "Id": 22,
+    "Title": "Hibernate in Action (Chinese Edition)",
+    "Author": "Christian Bauer, Gavin King",
+    "Count": 2
+  },
+  {
+    "Id": 23,
+    "Title": "Java Persistence with Hibernate",
+    "Author": "Christian Bauer, Gavin King",
+    "Count": 2
+  },
+  {
+    "Id": 24,
+    "Title": "JSTL in Action",
+    "Author": "Shawn Bayern",
+    "Count": 5
+  },
+  {
+    "Id": 25,
+    "Title": "iBATIS in Action",
+    "Author": "Clinton Begin, Brandon Goodin, Larry Meadors",
+    "Count": 3
+  },
+  {
+    "Id": 26,
+    "Title": "Designing Hard Software",
+    "Author": "Douglas W. Bennett",
+    "Count": 3
+  },
+  {
+    "Id": 27,
+    "Title": "Hibernate Search in Action",
+    "Author": "Emmanuel Bernard, John Griffin",
+    "Count": 5
+  },
+  {
+    "Id": 28,
+    "Title": "jQuery in Action",
+    "Author": "Bear Bibeault, Yehuda Katz",
+    "Count": 5
+  },
+  {
+    "Id": 29,
+    "Title": "jQuery in Action, Second Edition",
+    "Author": "Bear Bibeault, Yehuda Katz",
+    "Count": 3
+  },
+  {
+    "Id": 30,
+    "Title": "Building Secure and Reliable Network Applications",
+    "Author": "Kenneth P. Birman",
+    "Count": 4
+  },
+  {
+    "Id": 31,
+    "Title": "Ruby for Rails",
+    "Author": "David A. Black",
+    "Count": 1
+  },
+  {
+    "Id": 32,
+    "Title": "The Well-Grounded Rubyist",
+    "Author": "David A. Black",
+    "Count": 4
+  },
+  {
+    "Id": 33,
+    "Title": "Website Owner's Manual",
+    "Author": "Paul A. Boag",
+    "Count": 3
+  },
+  {
+    "Id": 34,
+    "Title": "ASP.NET 4.0 in Practice",
+    "Author": "Daniele Bochicchio, Stefano Mostarda, , Marco De Sanctis",
+    "Count": 4
+  },
+  {
+    "Id": 35,
+    "Title": "Hello! Python",
+    "Author": "Anthony Briggs",
+    "Count": 3
+  },
+  {
+    "Id": 36,
+    "Title": "PFC Programmer's Reference Manual",
+    "Author": "Richard Brooks",
+    "Count": 5
+  },
+  {
+    "Id": 37,
+    "Title": "Graphics File Formats",
+    "Author": "C. Wayne Brown, Barry J. Shepherd",
+    "Count": 3
+  },
+  {
+    "Id": 38,
+    "Title": "Visual Object Oriented Programming",
+    "Author": "Margaret M. Burnett, Adele Goldberg, , Ted G. Lewis",
+    "Count": 4
+  },
+  {
+    "Id": 39,
+    "Title": "iOS in Practice",
+    "Author": "Bear P. Cahill",
+    "Count": 2
+  },
+  {
+    "Id": 40,
+    "Title": "iPhone in Action",
+    "Author": "Christopher Allen, Shannon Appelcline",
+    "Count": 3
+  },
+  {
+    "Id": 41,
+    "Title": "Silverlight 2 in Action",
+    "Author": "Chad A. Campbell, John Stockton",
+    "Count": 1
+  },
+  {
+    "Id": 42,
+    "Title": "The Quick Python Book, Second Edition",
+    "Author": "Naomi R. Ceder",
+    "Count": 2
+  },
+  {
+    "Id": 43,
+    "Title": "Internet and Intranet Applications with PowerBuilder 6",
+    "Author": "Tom Cervenka",
+    "Count": 5
+  },
+  {
+    "Id": 44,
+    "Title": "Practical Methods for Your Year 2000 Problem",
+    "Author": "Robert Chapman",
+    "Count": 1
+  },
+  {
+    "Id": 45,
+    "Title": "Mobile Agents",
+    "Author": "William R. Cockayne and Michael Zyda, editors",
+    "Count": 5
+  },
+  {
+    "Id": 46,
+    "Title": "Spring Dynamic Modules in Action",
+    "Author": "Arnaud Cogoluegnes, Thierry Templier, , Andy Piper",
+    "Count": 2
+  },
+  {
+    "Id": 47,
+    "Title": "SQL Server 2008 Administration in Action",
+    "Author": "Rod Colledge",
+    "Count": 1
+  },
+  {
+    "Id": 48,
+    "Title": "Android in Practice",
+    "Author": "Charlie Collins, Michael D. Galpin, , Matthias Kaeppler",
+    "Count": 3
+  },
+  {
+    "Id": 49,
+    "Title": "Object Oriented Perl",
+    "Author": "Damian Conway",
+    "Count": 2
+  },
+  {
+    "Id": 50,
+    "Title": "GWT in Practice",
+    "Author": "Robert Cooper, Charles Collins",
+    "Count": 3
+  },
+  {
+    "Id": 51,
+    "Title": "Ajax in Action",
+    "Author": "Dave Crane, Eric Pascarello with Darren James",
+    "Count": 3
+  },
+  {
+    "Id": 52,
+    "Title": "Ajax in Practice",
+    "Author": "Dave Crane, Jord Sonneveld and Bear Bibeault with Ted Goddard, Chris Gray, Ram Venkataraman, Joe Walker",
+    "Count": 4
+  },
+  {
+    "Id": 53,
+    "Title": "Prototype and Scriptaculous in Action",
+    "Author": "Dave Crane, Bear Bibeault with Tom Locke",
+    "Count": 5
+  },
+  {
+    "Id": 54,
+    "Title": "POJOs in Action",
+    "Author": "Chris Richardson",
+    "Count": 4
+  },
+  {
+    "Id": 55,
+    "Title": "Data Munging with Perl",
+    "Author": "David Cross",
+    "Count": 1
+  },
+  {
+    "Id": 56,
+    "Title": "Hello! HTML5 & CSS3",
+    "Author": "Rob Crowther",
+    "Count": 1
+  },
+  {
+    "Id": 57,
+    "Title": "Seam in Action",
+    "Author": "Dan Allen",
+    "Count": 5
+  },
+  {
+    "Id": 58,
+    "Title": "Wicket in Action",
+    "Author": "Martijn Dashorst, Eelco Hillenius",
+    "Count": 3
+  },
+  {
+    "Id": 59,
+    "Title": "Open Source SOA",
+    "Author": "Jeff Davis",
+    "Count": 5
+  },
+  {
+    "Id": 60,
+    "Title": "Struts 2 in Action",
+    "Author": "Donald Brown, Chad Michael Davis, , Scott Stanlick",
+    "Count": 1
+  },
+  {
+    "Id": 61,
+    "Title": "Essential Guide to Peoplesoft Development and Customization",
+    "Author": "Tony DeLia, Galina Landres, Isidor Rivera, Prakash Sankaran",
+    "Count": 5
+  },
+  {
+    "Id": 62,
+    "Title": ".NET Multithreading",
+    "Author": "Alan Dennis",
+    "Count": 1
+  },
+  {
+    "Id": 63,
+    "Title": "SCWCD Exam Study Kit Second Edition",
+    "Author": "Hanumant Deshmukh, Jignesh Malavia, , Matthew Scarpino",
+    "Count": 5
+  },
+  {
+    "Id": 64,
+    "Title": "Spring Roo in Action",
+    "Author": "Ken Rimple, Srini Penchikala",
+    "Count": 5
+  },
+  {
+    "Id": 65,
+    "Title": "SOA Governance in Action",
+    "Author": "Jos Dirksen",
+    "Count": 3
+  },
+  {
+    "Id": 66,
+    "Title": "RSS and Atom in Action",
+    "Author": "Dave Johnson",
+    "Count": 3
+  },
+  {
+    "Id": 67,
+    "Title": "LDAP Programming, Management and Integration",
+    "Author": "Clayton Donley",
+    "Count": 4
+  },
+  {
+    "Id": 68,
+    "Title": "Mule in Action",
+    "Author": "David Dossot, John D'Emic",
+    "Count": 1
+  },
+  {
+    "Id": 69,
+    "Title": "Java Foundation Classes",
+    "Author": "Stephen C. Drye, William C. Wake",
+    "Count": 2
+  },
+  {
+    "Id": 70,
+    "Title": "Managing Components with Modeler",
+    "Author": "Vikram Goyal",
+    "Count": 2
+  },
+  {
+    "Id": 71,
+    "Title": "Command-line Processing with CLI",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 72,
+    "Title": "Understanding and Using Chain",
+    "Author": "Vikram Goyal",
+    "Count": 2
+  },
+  {
+    "Id": 73,
+    "Title": "Working with the Logging and Discovery Components",
+    "Author": "Vikram Goyal",
+    "Count": 1
+  },
+  {
+    "Id": 74,
+    "Title": "Uploading files with FileUpload",
+    "Author": "Vikram Goyal",
+    "Count": 4
+  },
+  {
+    "Id": 75,
+    "Title": "Handling Protocols with the Net Component",
+    "Author": "Vikram Goyal",
+    "Count": 1
+  },
+  {
+    "Id": 76,
+    "Title": "XML Parsing with Digester",
+    "Author": "Vikram Goyal",
+    "Count": 5
+  },
+  {
+    "Id": 77,
+    "Title": "JXPath and Betwixt: Working with XML",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 78,
+    "Title": "Validating Data with Validator",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 79,
+    "Title": "Enhancing Java Core Libraries with Collections",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 80,
+    "Title": "Enhancing Java Core Libraries with BeanUtils and Lang",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 81,
+    "Title": "Pool and DBCP: Creating and Using Object Pools",
+    "Author": "Vikram Goyal",
+    "Count": 3
+  },
+  {
+    "Id": 82,
+    "Title": "Python and Tkinter Programming",
+    "Author": "John E. Grayson",
+    "Count": 5
+  },
+  {
+    "Id": 83,
+    "Title": "Microsoft.NET for Programmers",
+    "Author": "Fergal Grimes",
+    "Count": 3
+  },
+  {
+    "Id": 84,
+    "Title": "Grails in Action",
+    "Author": "Glen Smith, Peter Ledbrook",
+    "Count": 1
+  },
+  {
+    "Id": 85,
+    "Title": "Up to Speed with Swing, Second Edition",
+    "Author": "Steven Gutz",
+    "Count": 5
+  },
+  {
+    "Id": 86,
+    "Title": "OSGi in Action",
+    "Author": "Richard S. Hall, Karl Pauls, Stuart McCulloch, , David Savage",
+    "Count": 3
+  },
+  {
+    "Id": 87,
+    "Title": "GWT in Action",
+    "Author": "Robert Hanson, Adam Tacy",
+    "Count": 2
+  },
+  {
+    "Id": 88,
+    "Title": "The Quick Python Book",
+    "Author": "Daryl Harms, Kenneth McDonald",
+    "Count": 4
+  },
+  {
+    "Id": 89,
+    "Title": "SharePoint 2010 Site Owner's Manual",
+    "Author": "Yvonne M. Harryman",
+    "Count": 3
+  },
+  {
+    "Id": 90,
+    "Title": "Java Development with Ant",
+    "Author": "Erik Hatcher, Steve Loughran",
+    "Count": 2
+  },
+  {
+    "Id": 91,
+    "Title": "Lucene in Action",
+    "Author": "Erik Hatcher, Otis Gospodnetic",
+    "Count": 2
+  },
+  {
+    "Id": 92,
+    "Title": "Lucene in Action, Second Edition",
+    "Author": "Erik Hatcher, Otis Gospodnetic, , Michael McCandless",
+    "Count": 1
+  },
+  {
+    "Id": 93,
+    "Title": "PowerBuilder 6.0 Questions & Answers",
+    "Author": "Tim Hatton",
+    "Count": 1
+  },
+  {
+    "Id": 94,
+    "Title": "The Awesome Power of PowerJ",
+    "Author": "Tim Hatton",
+    "Count": 4
+  },
+  {
+    "Id": 95,
+    "Title": "The Awesome Power of Power++",
+    "Author": "Tim Hatton",
+    "Count": 3
+  },
+  {
+    "Id": 96,
+    "Title": "Azure in Action",
+    "Author": "Chris Hay, Brian H. Prince",
+    "Count": 3
+  },
+  {
+    "Id": 97,
+    "Title": "Distributed Agile in Action",
+    "Author": "Vikas Hazrati, Balaji D Loganathan",
+    "Count": 1
+  },
+  {
+    "Id": 98,
+    "Title": "Metaprogramming in .NET",
+    "Author": "Kevin Hazzard, Jason Bock",
+    "Count": 2
+  },
+  {
+    "Id": 99,
+    "Title": "Portlets and Apache Portals",
+    "Author": "Stefan Hepper, Peter Fischer, Stephan Hesmer, Richard Jacob, David Sean Taylor",
+    "Count": 1
+  },
+  {
+    "Id": 100,
+    "Title": "Code Generation in Action",
+    "Author": "Jack Herrington",
+    "Count": 3
   }
 ]
