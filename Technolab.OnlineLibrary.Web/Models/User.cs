@@ -13,6 +13,16 @@ namespace Technolab.OnlineLibrary.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public bool VerifyUsername(string enteredUsername) {
+            if (string.IsNullOrEmpty(enteredUsername))
+                return false;
+
+            byte[] enteredUsernameBytes = Encoding.UTF8.GetBytes(enteredUsername);
+            byte[] correctUsernameBytes = Encoding.UTF8.GetBytes(Username);
+
+            return CryptographicOperations.FixedTimeEquals(enteredUsernameBytes, correctUsernameBytes);
+        }
+
         public bool VerifyPassword(string enteredPassword)
         {
             if (string.IsNullOrEmpty(enteredPassword))

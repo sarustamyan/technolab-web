@@ -29,7 +29,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             using var context = ContextFactory.Create();
 
             var user = context.Users
-                .Where(x => x.Username == model.Username && x.VerifyPassword(model.Password))
+                .Where(x => x.VerifyUsername(model.Username) && x.VerifyPassword(model.Password))
                 .SingleOrDefault();
             if (user == null)
             {
