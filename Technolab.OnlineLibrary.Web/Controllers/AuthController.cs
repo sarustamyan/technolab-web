@@ -27,9 +27,9 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
             using var context = ContextFactory.Create();
-            
+
             var user = context.Users
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
+                .Where(x => x.VerifyUsername(model.Username) && x.VerifyPassword(model.Password))
                 .SingleOrDefault();
             if (user == null)
             {
@@ -60,8 +60,8 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 new Claim(type: Consts.Claim.FirstName, value: user.FirstName),
                 new Claim(type: Consts.Claim.LastName, value: user.LastName),
             };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);            
-            
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity));
