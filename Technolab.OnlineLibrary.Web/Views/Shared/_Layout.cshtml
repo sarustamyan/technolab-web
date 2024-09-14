@@ -27,20 +27,23 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account">Account</a>
-                            </li>
-                            <li class="nav-item">
-                                <form method="post" asp-area="" asp-controller="Auth" asp-action="Logout">
-                                    <button type="submit" class="btn btn-link nav-link text-dark">Log Out</button>
-                                </form>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-area="" asp-controller="Auth" asp-action="Logout">
+                                <button type="submit" class="btn btn-link nav-link text-dark">Log Out</button>
+                            </form>
+                        </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                        </li>
                         }
                     </ul>
                 </div>

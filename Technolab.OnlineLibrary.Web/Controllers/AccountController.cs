@@ -10,5 +10,10 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
     }
 }
