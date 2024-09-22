@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.SQLite;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -26,11 +27,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            using var context = ContextFactory.Create();
-
-            var user = context.Users
-                .Where(x => x.VerifyUsername(model.Username) && x.VerifyPassword(model.Password))
-                .SingleOrDefault();
+            var user = GetUserFromSql(model);
             if (user == null)
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
@@ -40,6 +37,43 @@ namespace Technolab.OnlineLibrary.Web.Controllers
 
             await PerformLogin(user);
             return LocalRedirect(returnUrl ?? "/");
+        }
+
+        private User GetUserFromJson(LoginViewModel model)
+        {
+            using var context = ContextFactory.Create();
+
+            return context.Users
+                .Where(x => x.VerifyUsername(model.Username) && x.VerifyPassword(model.Password))
+                .SingleOrDefault();
+        }
+
+        private User GetUserFromSql(LoginViewModel model)
+        {
+            var connectionString = @"Data Source=data\data.db";
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "select * from users where username = '" + model.Username + "' and PasswordHash = '" + model.Password + "'";
+                using (var reader = command.ExecuteReader())
+                {
+                    if (!reader.Read())
+                    {
+                        return null;
+                    }
+                    return new Models.User
+                    {
+                        Id = (int)((long)reader["Id"]),
+                        Username = (string)reader["Username"],
+                        PasswordHash = (string)reader["PasswordHash"],
+                        Email = (string)reader["Email"],
+                        Role = (string)reader["Role"],
+                        FirstName = (string)reader["FirstName"],
+                        LastName = (string)reader["LastName"],
+                    };
+                }
+            }
         }
 
         [HttpPost]
