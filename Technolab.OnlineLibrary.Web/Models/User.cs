@@ -40,6 +40,11 @@ namespace Technolab.OnlineLibrary.Web.Models
             return CryptographicOperations.FixedTimeEquals(enteredPasswordHash, Convert.FromHexString(hashNoParams));
         }
 
+        public void ResetPassword(string newPassword)
+        {
+            PasswordHash = GenerateHash(newPassword);
+        }
+
         private string GenerateHash(string password)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(keySize);

@@ -18,5 +18,10 @@ namespace Technolab.OnlineLibrary.Web.Models
         {
             return $"{principal.GetFirstName()} {principal.GetLastName()}";
         }
+
+        public static string GetId(this ClaimsPrincipal principal)
+        {
+            return principal.FindFirstValue(Consts.Claim.UserId);
+        }
     }
 }
