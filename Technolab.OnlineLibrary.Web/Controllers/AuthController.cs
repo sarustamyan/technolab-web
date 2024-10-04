@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Technolab.OnlineLibrary.Web.Models;
 using Technolab.OnlineLibrary.Web.ViewModels;
@@ -27,7 +28,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            var user = GetUserFromSql(model);
+            var user = GetUserFromEF(model);
             if (user == null)
             {
                 ModelState.AddModelError(nameof(model.Username), "Invalid username or password");
@@ -39,7 +40,7 @@ namespace Technolab.OnlineLibrary.Web.Controllers
             return LocalRedirect(returnUrl ?? "/");
         }
 
-        private User GetUserFromJson(LoginViewModel model)
+        private User? GetUserFromJson(LoginViewModel model)
         {
             using var context = ContextFactory.Create();
 
@@ -48,7 +49,22 @@ namespace Technolab.OnlineLibrary.Web.Controllers
                 .SingleOrDefault();
         }
 
-        private User GetUserFromSql(LoginViewModel model)
+        private User? GetUserFromEF(LoginViewModel model)
+        {
+            using var context = ContextFactory.Create();
+
+            var user = context.Users
+                .Where(x => x.Username == model.Username)
+                .FirstOrDefault();
+            if (user == null || !user.VerifyPassword(model.Password))
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        private User? GetUserFromSql(LoginViewModel model)
         {
             var connectionString = @"Data Source=data\data.db";
             using (var connection = new SQLiteConnection(connectionString))

@@ -7,7 +7,7 @@ namespace Technolab.OnlineLibrary.Web
         public static void AddDbContextFactory(this IServiceCollection services)
         {
             services.AddSingleton<ILibraryDbContextFactory>(x =>
-                new FileBasedLibraryDbContextFactory(directoryPath: x.GetRequiredService<IConfiguration>()[ConfigurationKeys.FileBasedDbContextDirectory]));
+                new SqlBasedLibraryDbContextFactory(connectionString: x.GetRequiredService<IConfiguration>()[ConfigurationKeys.ConnectionString]));
         }
     }
 }

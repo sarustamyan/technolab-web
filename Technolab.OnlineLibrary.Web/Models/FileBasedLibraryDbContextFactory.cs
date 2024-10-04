@@ -7,10 +7,10 @@
             this.DirectoryPath = directoryPath;
         }
 
-
         public ILibraryDbContext Create()
         {
-            return new FileBasedLibraryDbContext(DirectoryPath);
+            throw new NotImplementedException();
+            //return new FileBasedLibraryDbContext(DirectoryPath);
         }
 
         public string DirectoryPath { get; }

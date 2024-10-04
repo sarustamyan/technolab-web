@@ -2,7 +2,7 @@
 
 namespace Technolab.OnlineLibrary.Web.Models
 {
-    public class FileBasedLibraryDbContext : ILibraryDbContext
+    public class FileBasedLibraryDbContext
     {
         public FileBasedLibraryDbContext(string dataDirectoryPath)
         {
@@ -44,15 +44,13 @@ namespace Technolab.OnlineLibrary.Web.Models
             if (!File.Exists(filePath))
             {
                 // File.Create keeps a lock on the file after creation if not disposed properly
-                using (var file = File.Create(filePath)) 
-                { 
+                using (var file = File.Create(filePath))
+                {
                 }
             }
 
             var contents = File.ReadAllText(filePath);
             return string.IsNullOrEmpty(contents) ? new List<T>() : JsonSerializer.Deserialize<List<T>>(contents);
         }
-
-
     }
 }

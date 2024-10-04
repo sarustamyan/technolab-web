@@ -1,11 +1,13 @@
-﻿namespace Technolab.OnlineLibrary.Web.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Technolab.OnlineLibrary.Web.Models
 {
     public interface ILibraryDbContext : IDisposable
     {
-        List<User> Users { get; set; }
+        DbSet<User> Users { get; set; }
 
-        List<Book> Books { get; set; }
+        DbSet<Book> Books { get; set; }
 
-        void SaveChanges();
+        int SaveChanges();
     }
 }

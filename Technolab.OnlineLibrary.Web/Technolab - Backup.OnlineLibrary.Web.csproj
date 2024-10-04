@@ -11,11 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="efpt.config.json.user" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.33" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.20" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
   </ItemGroup>

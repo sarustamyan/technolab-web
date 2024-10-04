@@ -10,5 +10,6 @@
     {
         public const string AuthCookieName = "AuthCookieName";
         public const string FileBasedDbContextDirectory = "FileBasedDbContextDirectory";
+        public const string ConnectionString = "ConnectionString";
     }
 }
