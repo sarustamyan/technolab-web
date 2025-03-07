@@ -2,9 +2,15 @@
 
 @{
     ViewData["Title"] = "Books";
+    var currentPageSize = ViewBag.PageSize ?? 10;
+
+    var selected10 = currentPageSize == 10 ? "selected" : "";
+    var selected20 = currentPageSize == 20 ? "selected" : "";
+    var selected50 = currentPageSize == 50 ? "selected" : "";
 }
 
 <h1 class="display-4 mb-6">Books</h1>
+
 
 @foreach (var book in Model.Books)
 {
@@ -15,5 +21,18 @@
             <a class="card-link" asp-area="" asp-controller="Checkouts" asp-action="Index">Get this item</a>
         </div>
     </div>
+}
+
+
+@if (Model.TotalPages > 1)
+{
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = currentPageSize })">@i</a>
+            </li>
+        }
+    </ul>
 }
 
